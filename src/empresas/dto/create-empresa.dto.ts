@@ -4,6 +4,7 @@ import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 export class CreateEmpresaDto {
   @ApiProperty({
     description: 'Número de iidentificación tributaria',
+    example: '10122012334-5',
   })
   @IsString()
   @IsNotEmpty()
@@ -11,6 +12,7 @@ export class CreateEmpresaDto {
 
   @ApiProperty({
     description: 'Nombre corredpondiente a la empresa',
+    example: 'Banco de la república de Colombia',
   })
   @IsString()
   @IsNotEmpty()
@@ -18,6 +20,7 @@ export class CreateEmpresaDto {
 
   @ApiProperty({
     description: 'Descripción correspondiente a la empresa',
+    example: 'Banco encargado de la emisión de moneda en Colombia',
   })
   @IsString()
   @IsNotEmpty()
