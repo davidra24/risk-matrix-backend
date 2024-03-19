@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AreasModule } from './areas/areas.module';
+import { AuthModule } from './auth/auth.module';
 import { EmpresasModule } from './empresas/empresas.module';
-import { CommonModule } from './common/common.module';
+import { ProcesosModule } from './procesos/procesos.module';
 
 @Module({
   imports: [
@@ -18,7 +20,10 @@ import { CommonModule } from './common/common.module';
       synchronize: true,
     }),
     EmpresasModule,
-    CommonModule,
+
+    AuthModule,
+    AreasModule,
+    ProcesosModule,
   ],
   controllers: [],
   providers: [],
