@@ -1,9 +1,11 @@
 import { Empresa } from 'src/empresas/entities/empresa.entity';
+import { Proceso } from 'src/procesos/entities/proceso.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -27,6 +29,11 @@ export class Area {
     nullable: false,
   })
   empresa: Empresa;
+
+  @OneToMany(() => Proceso, (proceso: Proceso) => proceso.area, {
+    cascade: true,
+  })
+  procesos?: Proceso[];
 
   id_empresa?: string;
 

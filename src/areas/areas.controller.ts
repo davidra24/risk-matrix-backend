@@ -35,8 +35,8 @@ export class AreasController {
 
   @Get(':id')
   @Auth(ValidRoles.empresa)
-  findOne(@Param('id', ParseUUIDPipe) id: string, @GetUser() user: User) {
-    return this.areasService.findOne(id, user);
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
+    return this.areasService.findOne(id);
   }
 
   @Patch(':id')
@@ -44,14 +44,13 @@ export class AreasController {
   update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateAreaDto: UpdateAreaDto,
-    @GetUser() user: User,
   ) {
-    return this.areasService.update(id, updateAreaDto, user);
+    return this.areasService.update(id, updateAreaDto);
   }
 
   @Delete(':id')
   @Auth(ValidRoles.empresa)
-  remove(@Param('id', ParseUUIDPipe) id: string, @GetUser() user: User) {
-    return this.areasService.remove(id, user);
+  remove(@Param('id', ParseUUIDPipe) id: string) {
+    return this.areasService.remove(id);
   }
 }

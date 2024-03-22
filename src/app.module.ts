@@ -2,9 +2,14 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AreasModule } from './areas/areas.module';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './auth/modules/auth.module';
+import { UserModule } from './auth/modules/user.module';
+import { CommonModule } from './common/common.module';
 import { EmpresasModule } from './empresas/empresas.module';
+import { ImpactosModule } from './impactos/impactos.module';
+import { FrecuenciasModule } from './probabilidades/probabilidades.module';
 import { ProcesosModule } from './procesos/procesos.module';
+import { RiesgosModule } from './riesgos/riesgos.module';
 
 @Module({
   imports: [
@@ -20,10 +25,14 @@ import { ProcesosModule } from './procesos/procesos.module';
       synchronize: true,
     }),
     EmpresasModule,
-
-    AuthModule,
+    CommonModule,
     AreasModule,
+    AuthModule,
     ProcesosModule,
+    UserModule,
+    ImpactosModule,
+    FrecuenciasModule,
+    RiesgosModule,
   ],
   controllers: [],
   providers: [],
