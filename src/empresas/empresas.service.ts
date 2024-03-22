@@ -74,7 +74,7 @@ export class EmpresasService {
       const empresa = await this.findOne(id);
       return await this.empresaRepository.remove(empresa);
     } catch (error) {
-      return error;
+      handleDBExceptions(error);
     }
   }
 }

@@ -1,34 +1,13 @@
-import {
-  BadRequestException,
-  InternalServerErrorException,
-  Logger,
-  NotFoundException,
-} from '@nestjs/common';
-import {
-  DUPLICATE_UNIQUE_CONSTRAINT,
-  NOT_FOUND,
-  UNDEFINED_SEARCH,
-} from './common.constants';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { EmpresasService } from 'src/empresas/empresas.service';
 
-const logger = new Logger('Common');
+@Injectable()
+export class CommonService {
+  constructor(private readonly empresaService: EmpresasService) {}
 
-export const handleDBExceptions = (error: any) => {
-  Logger.warn({ error });
-  if (error.code === DUPLICATE_UNIQUE_CONSTRAINT)
-    throw new BadRequestException(error.detail);
-  if (error.code === UNDEFINED_SEARCH)
-    throw new BadRequestException('Criterio de busqueda incorrecto');
-
-  if (error.status === NOT_FOUND)
-    throw new NotFoundException('Recursos no encontrados');
-
-  throw new InternalServerErrorException(error);
-};
-export const convertNIT = (nit: string): string => {
-  //TODO: validar NIT con digito de verificacion
-  return nit;
-};
-export const isValidNIT = (nit: string): boolean => {
-  //TODO: Validar el formato dle nit y el digito de verificación
-  return nit !== null;
-};
+  async getEmpresa(id_empresa: string) {
+    const empresa = await this.empresaService.findOne(id_empresa);
+    if (!empresa) throw new NotFoundException('Empresa relacionada no existe');
+    return empresa;
+  }
+}

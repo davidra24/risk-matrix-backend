@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Empresa } from 'src/empresas/entities/empresa.entity';
+import { Proceso } from 'src/procesos/entities/proceso.entity';
 import {
   BeforeInsert,
   BeforeUpdate,
@@ -8,11 +9,12 @@ import {
   Entity,
   Index,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('Usuarios')
+@Entity({ name: 'Usuarios' })
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -59,6 +61,11 @@ export class User {
 
   @ManyToOne(() => Empresa, (empresa: Empresa) => empresa.usuarios)
   empresa: Empresa;
+
+  @OneToMany(() => Proceso, (proceso: Proceso) => proceso.responsable, {
+    cascade: true,
+  })
+  procesos?: Proceso[];
 
   id_empresa?: string;
 

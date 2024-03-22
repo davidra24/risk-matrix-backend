@@ -7,13 +7,12 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
-import { handleDBExceptions } from 'src/common';
-import { EmpresasService } from 'src/empresas/empresas.service';
+import { CommonService, handleDBExceptions } from 'src/common';
 import { Empresa } from 'src/empresas/entities/empresa.entity';
 import { Repository } from 'typeorm';
-import { CreateUserDTO, LoginUserDTO } from './dto';
-import { User } from './entities/user.entity';
-import { JwtPayload } from './interfaces/jwt-payload.interface';
+import { CreateUserDTO, LoginUserDTO } from '../dto';
+import { User } from '../entities/user.entity';
+import { JwtPayload } from '../interfaces/jwt-payload.interface';
 
 @Injectable()
 export class AuthService {
@@ -21,7 +20,7 @@ export class AuthService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
-    private readonly empresaService: EmpresasService,
+    private readonly commonService: CommonService,
   ) {}
 
   async create(createUserDto: CreateUserDTO, u: User) {
@@ -32,7 +31,7 @@ export class AuthService {
 
       id_empresa = id_empresa ? id_empresa : userData.empresa;
 
-      const empresa = await this.empresaService.findOne(id_empresa);
+      const empresa = await this.commonService.getEmpresa(id_empresa);
 
       if (!empresa)
         throw new NotFoundException('Empresa relacionada no existe');
@@ -87,7 +86,6 @@ export class AuthService {
       //return error;
     }
   }
-
   async checkAuthStatus(user: User) {
     delete user.roles;
     const { empresa } = user;
